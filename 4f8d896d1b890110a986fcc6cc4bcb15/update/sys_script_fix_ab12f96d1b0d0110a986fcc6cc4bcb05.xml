@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_fix">
+    <sys_script_fix action="INSERT_OR_UPDATE">
+        <before>false</before>
+        <description/>
+        <name>tests</name>
+        <record_for_rollback>false</record_for_rollback>
+        <script><![CDATA[/* ***************** testing  getHTMLformattedListofAssets ***************************/
+
+/*
+var response_body='{"data":{"site":{"assetResources":{"total":1,"items":[{"_id":"60f98ff9e30efa428eaed27e","assetBasicInfo":{"name":"DESKTOP-1C7J29L","userDomain":"DESKTOP-1C7J29L","userName":"cyber","ipAddress":"192.168.1.134","lastSeen":"2021-11-08T21:18:36.263Z","mac":"00:0C:29:1A:70:12"},"assetCustom":{"model":"VMware7,1"},"operatingSystem":{"caption":"Microsoft Windows 10 Pro"},"url":"https://app.lansweeper.com/sayes-house/asset/Mi1Bc3NldC1kMTdkNzBiNC05ZmNkLTRlNzItYmZlYS00ODM1YzA5ZDk4NDg=/summary"}]}}}}';
+var lsu=new lsutils();
+gs.info(lsu.getHTMLformattedListofAssets (response_body));
+*/
+
+
+/* ***************** testing getListofSites ***************************/
+/*
+var response_body='{"data":{"authorizedSites":{"sites":[{"id":"18a3bc01-99ee-4531-a822-676d454fe693","name":"sayes-house"},{"id":"45a33c01-99ee-4531-b822-676d454f5678","name":"some site"}]}}}';
+var lsu=new lsutils();
+gs.info(lsu.getListofSites(response_body));
+*/
+
+/* ***************** testing  getHTMLformattedListofSites ***************************/
+/*
+var response_body='{"data":{"authorizedSites":{"sites":[{"id":"18a3bc01-99ee-4531-a822-676d454fe693","name":"sayes-house"},{"id":"45a33c01-99ee-4531-b822-676d454f5678","name":"some site"}]}}}';
+var lsu=new lsutils();
+gs.info(lsu.getHTMLformattedListofSites(response_body));
+*/]]></script>
+        <sys_class_name>sys_script_fix</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-14 12:55:36</sys_created_on>
+        <sys_id>ab12f96d1b0d0110a986fcc6cc4bcb05</sys_id>
+        <sys_mod_count>10</sys_mod_count>
+        <sys_name>tests</sys_name>
+        <sys_package display_value="Lansweeper Spoke" source="x_291328_ls_spk">4f8d896d1b890110a986fcc6cc4bcb15</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Lansweeper Spoke">4f8d896d1b890110a986fcc6cc4bcb15</sys_scope>
+        <sys_update_name>sys_script_fix_ab12f96d1b0d0110a986fcc6cc4bcb05</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-18 14:25:05</sys_updated_on>
+        <unloadable>false</unloadable>
+    </sys_script_fix>
+</record_update>

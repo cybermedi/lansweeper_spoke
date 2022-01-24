@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_291328_ls_spk.lsutils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Lansweeper utilites to support Lansweeper spoke</description>
+        <name>lsutils</name>
+        <script><![CDATA[var lsutils = Class.create();
+lsutils.prototype = {
+    initialize: function() {},
+    getListofSites: function(response_body) {
+        if (this._isValidJson(response_body)) {
+            var body_json = JSON.parse(response_body);
+            if (this._hasOwnDeepProperty(body_json, "data.authorizedSites.sites")) {
+                var sites = body_json.data.authorizedSites.sites;
+                var response = [];
+                for (var i in sites) {
+                    response.push(sites[i].id);
+                }
+                return response.toString();
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    },
+
+    getHTMLformattedListofAssets: function(response_body) {
+        if (this._isValidJson(response_body)) {
+            var body_json = JSON.parse(response_body);
+            if (this._hasOwnDeepProperty(body_json, "data.site.assetResources.items")) {
+                var items = body_json.data.site.assetResources.items;
+                var html = '<table style=" border: 1px solid #393E46;background-color: #FFFFFF;width: 100%;text-align: left;border-collapse: collapse;">';
+
+                for (var i = 0; i <=items.length; i++) {
+                    if (i == 0) {
+                        html += '<thead style=" background: #FFFFFF;border-bottom: 2px solid #393E46; font-size: 15px;font-weight: bold;color: #FF8A00;border-left: 1px solid #393E46;"><tr>';
+                        if (items[i].hasOwnProperty('assetBasicInfo')) {
+                            html += '<th style="border: 1px solid #393E46;padding: 3px 2px;">name</th>';
+                            for (var key_bi in items[i].assetBasicInfo) {
+                                if (key_bi != 'name') {
+                                    html += '<th style="border: 1px solid #393E46;padding: 3px 2px;">' + key_bi + '</th>';
+                                }
+                            }
+                        }
+                        if (items[i].hasOwnProperty('assetCustom')) {
+                            for (var key_cus in items[i].assetCustom) {
+                                html += '<th style="border: 1px solid #393E46;padding: 3px 2px;">' + key_cus + '</th>';
+                            }
+                        }
+                        if (items[i].hasOwnProperty('operatingSystem')) {
+                            for (var key_os in items[i].operatingSystem) {
+                                html += '<th style="border: 1px solid #393E46;padding: 3px 2px;">' + key_os + '</th>';
+                            }
+                        }
+                        html += '</thead><tbody>';
+                    } else {
+                        if (i % 2 != 0) {
+                            html += '<tr>';
+                        } else {
+                            html += '<tr style="background: #D1D3D3;">';
+                        }
+                        if (items[i - 1].hasOwnProperty('assetBasicInfo')) {
+                            html += '<td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;"><a href="' + items[i - 1].url + '" target="_blank">' + items[i - 1].assetBasicInfo['name'] + '</a></td>';
+                            for (var key_bi in items[i-1].assetBasicInfo) {
+                                if (key_bi != 'name') {
+                                    html += '<td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;">' + items[i - 1].assetBasicInfo[key_bi] + '</td>';
+                                }
+                            }
+                        }
+                        if (items[i - 1].hasOwnProperty('assetCustom')) {
+                            for (var key_cus in items[i-1].assetCustom) {
+                                html += '<td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;">' + items[i - 1].assetCustom[key_cus] + '</td>';
+                            }
+                        }
+                        if (items[i - 1].hasOwnProperty('operatingSystem')) {
+                            for (var key_os in items[i-1].operatingSystem) {
+                                html += '<td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;">' + items[i - 1].operatingSystem[key_os] + '</td>';
+
+                            }
+                        }
+                        html += '</tr>';
+                    }
+				}
+                html += '</tbody></table>';
+                return html;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    },
+
+    getHTMLformattedListofSites: function(response_body) {
+        if (this._isValidJson(response_body)) {
+            var body_json = JSON.parse(response_body);
+            if (this._hasOwnDeepProperty(body_json, "data.authorizedSites.sites")) {
+                var sites = body_json.data.authorizedSites.sites;
+                var html = '<table style=" border: 1px solid #393E46;background-color: #FFFFFF;width: 100%;text-align: left;border-collapse: collapse;"><thead style=" background: #FFFFFF;border-bottom: 2px solid #393E46; font-size: 15px;font-weight: bold;color: #FF8A00;border-left: 1px solid #393E46;"><tr><th style="border: 1px solid #393E46;padding: 3px 2px;">Site Name</th><th style="border: 1px solid #393E46;padding: 3px 2px;">Site Id</th></tr></thead><tbody style="font-size: 13px;color: #393E46;">';
+                for (var i in sites) {
+                    if (i % 2 != 0) {
+                        html += '<tr>';
+                    } else {
+                        html += '<tr style="background: #D1D3D3;">';
+                    }
+                    html += '<td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;">' + sites[i].name + '</td><td style="border: 1px solid #393E46;padding: 3px 2px;font-size: 13px;color: #393E46;">' + sites[i].id + '</td></tr>';
+                }
+                html += '</tbody></table>';
+                return html;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    },
+
+    _isValidJson: function(json) {
+        try {
+            JSON.parse(json);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+
+    _hasOwnDeepProperty: function(obj, path) {
+        var arr;
+        for (var i = 0, path = path.split('.'), len = path.length; i < len; i++) {
+            arr = path[i].match(/(.+)\[(\d+)\]/mi);
+            if (arr != null) {
+                if (arr.length == 3) {
+                    if (obj[arr[1]]) obj = obj[arr[1]][arr[2]];
+                    else return false;
+                }
+            } else obj = obj[path[i]];
+            if (!obj) return false;
+        }
+        return true;
+    },
+    type: 'lsutils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-14 12:54:49</sys_created_on>
+        <sys_id>9b5ee1a91b0d0110a986fcc6cc4bcb34</sys_id>
+        <sys_mod_count>32</sys_mod_count>
+        <sys_name>lsutils</sys_name>
+        <sys_package display_value="Lansweeper Spoke" source="x_291328_ls_spk">4f8d896d1b890110a986fcc6cc4bcb15</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Lansweeper Spoke">4f8d896d1b890110a986fcc6cc4bcb15</sys_scope>
+        <sys_update_name>sys_script_include_9b5ee1a91b0d0110a986fcc6cc4bcb34</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-01-18 14:16:26</sys_updated_on>
+    </sys_script_include>
+</record_update>
